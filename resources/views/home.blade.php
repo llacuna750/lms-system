@@ -8,11 +8,11 @@
 
     {{-- Role-Based Welcome --}}
     @if(Auth::user()->role === 'admin')
-    <div class="alert alert-info">Welcome, Admin! You can manage all courses, subjects, and users.</div>
+        <div class="alert alert-info">Welcome, Admin! You can manage all courses, subjects, and users.</div>
     @elseif(Auth::user()->role === 'teacher')
-    <div class="alert alert-warning">Welcome, Teacher! You can view assigned courses and student enrollments.</div>
+        <div class="alert alert-warning">Welcome, Teacher! You can view assigned courses and student enrollments.</div>
     @else
-    <div class="alert alert-success">Welcome, Student! View your enrolled courses here.</div>
+        <div class="alert alert-success">Welcome, Student! View your enrolled courses here.</div>
     @endif
 
     {{-- Summary Cards --}}

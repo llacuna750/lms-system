@@ -13,7 +13,7 @@ class ReportController extends Controller
     public function allRecords()
     {
         $enrollments = Enrollment::with(['user', 'course'])->get();
-        $pdf = Pdf::loadView('pdf.all-enrollments', compact('enrollments'));
+        $pdf = Pdf::loadView('subjects.pdf_all', compact('enrollments'));
         return $pdf->download('enrollment-report.pdf');
     }
 }

@@ -13,6 +13,8 @@ use App\Http\Controllers\StudentController;
 
 use App\Http\Controllers\HomeController; // 12th add home.blade.php
 
+use App\Http\Controllers\EnrollmentController; // 14th update the RoleMiddleware & add web
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,23 +29,41 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
-Route::middleware(['auth', 'role:admin'])->group(function () {                      // { 8TH update`    
+// 8TH update
+Route::middleware(['auth', 'role:admin'])->group(function () {                      // { 8TH update`
     Route::resource('subjects', SubjectController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('users', UserController::class);
     Route::get('/reports/all', [ReportController::class, 'allRecords']);
 });
 
+// Teacher-only routes
 Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::get('/my-courses', [TeacherController::class, 'courses']);
 });
 
+// Student-only routes
 Route::middleware(['auth', 'role:student'])->group(function () {
-    Route::get('/my-enrollments', [StudentController::class, 'enrollments']);
-});                                                                              // 8TH update   } 
+    Route::get('/my-enrollments', [StudentController::class, 'enrollments']); // original call
+    // Removed duplicate EnrollmentController route
+});
+
+// 14th update the RoleMiddleware & add web 
+Route::middleware(['auth', 'role:admin,teacher'])->group(function () {
+    // Shared access to enrollments for admin and teacher
+    Route::resource('enrollments', EnrollmentController::class);  // moved here properly
+}); // 8TH update   } 
 
 Route::get('/home', [HomeController::class, 'index'])->middleware(['auth'])->name('home');   // 12th add home.blade.php
 
-require __DIR__.'/auth.php';
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('subjects', SubjectController::class);
+
+    // PDF Export Routes
+    Route::get('/subjects/export/all', [SubjectController::class, 'exportAll'])->name('subjects.exportAll');
+    Route::get('/subjects/{subject}/export', [SubjectController::class, 'export'])->name('subjects.export');
+});
+
+require __DIR__ . '/auth.php';

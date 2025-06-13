@@ -7,6 +7,8 @@
 </head>
 
 <body>
+    <h1>Gwapo ko</h1>
+        
     @include('partials.nav')
     <main class="py-4">
         @yield('content')

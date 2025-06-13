@@ -18,8 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             
-            $table->string('role')->default('student'); // roles: admin, teacher, student  1st Update
-            $table->string('avatar')->nullable();      // user profile photo               1st Update
+            $table->string('role')->default('student'); // roles: admin, teacher, student               1st Update
+            $table->string('avatar')->nullable();      // user profile photo                             1st Update
 
             $table->rememberToken();
             $table->timestamps();
