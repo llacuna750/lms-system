@@ -15,7 +15,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th width="150">Actions</th>
+                <th width="220">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +30,7 @@
                         @csrf @method('DELETE')
                         <button class="btn btn-sm btn-danger">Delete</button>
                     </form>
+                    <a href="{{ route('users.export', $user->id) }}" class="btn btn-sm btn-secondary">PDF</a>
                 </td>
             </tr>
             @empty
@@ -41,5 +42,6 @@
     </table>
 
     {{ $users->links() }}
+    <a href="{{ route('users.exportAll') }}" class="btn btn-outline-dark mb-3">Export All as PDF</a>
 </div>
 @endsection

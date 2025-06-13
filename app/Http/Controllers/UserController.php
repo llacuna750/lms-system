@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+use Barryvdh\DomPDF\Facade\Pdf; // 16th update UserController : add exportALL() and update route Add Routes to it, in users view + pdf_all,pdf_single update index + show() method + route
+
 class UserController extends Controller
 {
     public function index()
@@ -61,5 +63,26 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
+    }
+
+    // 16th update UserController : add exportALL() and update route Add Routes to it, in users view + pdf_all,pdf_single update index + show() method + route
+    public function exportAll()
+    {
+        $users = User::all();
+        $pdf = Pdf::loadView('users.pdf_all', compact('users'));
+        return $pdf->download('all-users.pdf');
+    }
+
+    // 16th update UserController : add exportALL() and update route Add Routes to it, in users view + pdf_all,pdf_single update index + show() method + route
+    public function export(User $user)
+    {
+        $pdf = Pdf::loadView('users.pdf_single', compact('user'));
+        return $pdf->download('user-' . $user->id . '.pdf');
+    }
+
+    // 16th update UserController : add exportALL() and update route Add Routes to it, in users view + pdf_all,pdf_single update index + show() method + route
+    public function show(User $user)
+    {
+        return redirect()->route('users.index');
     }
 }

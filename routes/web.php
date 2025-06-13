@@ -66,4 +66,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/subjects/{subject}/export', [SubjectController::class, 'export'])->name('subjects.export');
 });
 
+
+Route::get('/users/export', [UserController::class, 'exportAll'])->name('users.exportAll'); // 16th update UserController : add exportALL() and update route Add Routes to it, in users view + pdf_all,pdf_single update index + show() method + route
+Route::get('/users/{user}/export', [UserController::class, 'export'])->name('users.export'); // 16th update UserController : add exportALL() and update route Add Routes to it, in users view + pdf_all,pdf_single update index + show() method + route
+Route::resource('users', UserController::class)->except(['show']); // 16th update UserController : add exportALL() and update route Add Routes to it, in users view + pdf_all,pdf_single update index + show() method + route
+
 require __DIR__ . '/auth.php';
