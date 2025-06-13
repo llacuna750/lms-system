@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CourseController extends Controller
 {
@@ -12,7 +13,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::paginate(10);
+        return view('courses.index', compact('courses'));
     }
 
     /**
@@ -20,7 +22,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('courses.create');
     }
 
     /**
@@ -28,7 +30,13 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'code' => 'required|unique:courses'
+        ]);
+
+        Course::create($request->all());
+        return redirect()->route('courses.index')->with('success', 'Course created successfully.');
     }
 
     /**
@@ -44,7 +52,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        return view('courses.edit', compact('course'));
     }
 
     /**
@@ -52,7 +60,13 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'code' => 'required|unique:courses,code,' . $course->id
+        ]);
+
+        $course->update($request->all());
+        return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
     }
 
     /**
@@ -60,6 +74,21 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+        return redirect()->route('courses.index')->with('success', 'Course deleted successfully.');
+    }
+
+    // chatGPT answer
+    public function exportAll()
+    {
+        $courses = Course::all();
+        $pdf = Pdf::loadView('courses.pdf_all', compact('courses'));
+        return $pdf->download('all-courses.pdf');
+    }
+
+    public function export(Course $course)
+    {
+        $pdf = Pdf::loadView('courses.pdf_single', compact('course'));
+        return $pdf->download('course-' . $course->id . '.pdf');
     }
 }

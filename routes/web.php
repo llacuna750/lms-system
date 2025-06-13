@@ -4,10 +4,12 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SubjectController;
-// use App\Http\Controllers\CourseController;
-// use App\Http\Controllers\UserController;
-// use App\Http\Controllers\ReportController;
-// use App\Http\Controllers\StudentController;
+use App\Http\Controllers\CourseController;
+
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,7 +27,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::middleware(['auth', 'role:admin'])->group(function () {                    `// { 8TH update`    
+Route::middleware(['auth', 'role:admin'])->group(function () {                      // { 8TH update`    
     Route::resource('subjects', SubjectController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('users', UserController::class);
