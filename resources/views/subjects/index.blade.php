@@ -30,6 +30,9 @@
         </tbody>
     </table>
     {{ $subjects->links() }}
-    <a href="{{ route('subjects.exportAll') }}" class="btn btn-success mt-2">Export All as PDF</a>
+    <!-- <a href="{{ route('subjects.exportAll') }}" class="btn btn-success mt-2">Export All as PDF</a> -->
+
+    <a href="{{ route('subjects.exportAll') }}" class="btn btn-sm btn-success">Export All to PDF</a>    
+
 </div>
 @endsection

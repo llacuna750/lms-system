@@ -27,7 +27,13 @@ class SubjectController extends Controller
             'code' => 'required|unique:subjects'
         ]);
 
-        Subject::create($request->all());
+        // Subject::create($request->all());
+
+        Subject::create([
+            'name' => $request->name,
+            'code' => $request->code,
+        ]);
+
         return redirect()->route('subjects.index')->with('success', 'Subject added');
     }
 
@@ -51,5 +57,20 @@ class SubjectController extends Controller
     {
         $subject->delete();
         return redirect()->route('subjects.index')->with('success', 'Subject deleted');
+    }
+
+    // Export All Subjects to PDF
+    public function exportAll()
+    {
+        $subjects = Subject::all();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('subjects.pdf_all', compact('subjects'));
+        return $pdf->download('all-subjects.pdf');
+    }
+
+    // Export Single Subject to PDF
+    public function export(Subject $subject)
+    {
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('subjects.pdf_single', compact('subject'));
+        return $pdf->download('subject-' . $subject->id . '.pdf');
     }
 }

@@ -57,8 +57,8 @@ Route::middleware(['auth', 'role:admin,teacher'])->group(function () {
 Route::get('/home', [HomeController::class, 'index'])->middleware(['auth'])->name('home');   // 12th add home.blade.php
 
 
-
-Route::middleware(['auth'])->group(function () {
+// 14th update the RoleMiddleware/ReportController/Usercontroller & add web and add folder users index,create,edit
+Route::middleware(['auth'])->group(function () {  
     Route::resource('subjects', SubjectController::class);
 
     // PDF Export Routes
