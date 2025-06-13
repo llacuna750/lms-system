@@ -11,6 +11,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 
+use App\Http\Controllers\HomeController; // 12th add home.blade.php
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -42,5 +44,6 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/my-enrollments', [StudentController::class, 'enrollments']);
 });                                                                              // 8TH update   } 
 
+Route::get('/home', [HomeController::class, 'index'])->middleware(['auth'])->name('home');   // 12th add home.blade.php
 
 require __DIR__.'/auth.php';

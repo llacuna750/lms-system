@@ -3,7 +3,12 @@
         <a class="navbar-brand" href="/">LMS</a>
         <ul class="navbar-nav ml-auto">
             @auth
-            <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+            <li class="nav-item">
+                <!-- <a class="nav-link" href="/dashboard">Dashboard</a> -->
+                 
+                <!-- 12th add home.blade.php & HomeController updated the: partials.nav -->
+                <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
+            </li>
             @if(Auth::user()->role === 'admin')
             <li class="nav-item"><a class="nav-link" href="/subjects">Subjects</a></li>
             <li class="nav-item"><a class="nav-link" href="/courses">Courses</a></li>
