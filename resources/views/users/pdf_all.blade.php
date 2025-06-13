@@ -2,24 +2,32 @@
 <html>
 
 <head>
-    <title>All Users</title>
+    <title>All Users PDF</title>
     <style>
         body {
             font-family: sans-serif;
         }
 
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            font-size: 14px;
         }
 
         th,
         td {
-            border: 1px solid #000;
+            border: 1px solid #222;
             padding: 8px;
-            font-size: 12px;
             text-align: left;
+        }
+
+        th {
+            background-color: #eee;
         }
     </style>
 </head>
@@ -29,16 +37,14 @@
     <table>
         <thead>
             <tr>
-                <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($users as $i => $user)
+            @foreach($users as $user)
             <tr>
-                <td>{{ $i + 1 }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ ucfirst($user->role) }}</td>

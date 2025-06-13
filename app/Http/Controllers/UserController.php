@@ -51,13 +51,21 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|in:admin,teacher,student'
+            'role' => 'required|in:admin,teacher,student',
+            'password' => 'nullable|min:6', // Allow password change optionally
         ]);
 
-        $user->update($request->only(['name', 'email', 'role']));
+        $data = $request->only(['name', 'email', 'role']);
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
+
 
     public function destroy(User $user)
     {
@@ -70,7 +78,7 @@ class UserController extends Controller
     {
         $users = User::all();
         $pdf = Pdf::loadView('users.pdf_all', compact('users'));
-        return $pdf->download('all-users.pdf');
+        return $pdf->download('all_users.pdf');
     }
 
     // 16th update UserController : add exportALL() and update route Add Routes to it, in users view + pdf_all,pdf_single update index + show() method + route
