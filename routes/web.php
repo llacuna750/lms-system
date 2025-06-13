@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::middleware(['auth', 'role:admin'])->group(function () {                    // { 8TH update    
+Route::middleware(['auth', 'role:admin'])->group(function () {                    `// { 8TH update`    
     Route::resource('subjects', SubjectController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('users', UserController::class);
